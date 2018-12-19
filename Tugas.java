@@ -32,4 +32,9 @@ public class Tugas{
 	public static void main(String [] args){
 		menu();
 	}
+	
+	public void clearScreen() {
+		for (int i = 0; i < 50; ++i) System.out.println();
+	}
+	
 }
