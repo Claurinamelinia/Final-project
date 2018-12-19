@@ -3,6 +3,7 @@ public class Tugas{
 
 	public static void main(String [] args){
 		menu();
+
 	}
 
 	static void menu(){
@@ -20,7 +21,7 @@ public class Tugas{
 			System.out.print("Choose menu:");
 
 			choose = scan.nextInt();
-			scan.nextLine();
+
 
 			switch(choose){
 				case 1:
@@ -30,10 +31,14 @@ public class Tugas{
 				break;
 			}
 
+
+				String x = scan.nextLine();
+				clearScreen();
+
 		}while(choose != 6);
 	}
 
-	public void clearScreen() {
+	static void clearScreen() {
 		for (int i = 0; i < 50; ++i) System.out.println();
 	}
 
