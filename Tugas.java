@@ -1,13 +1,17 @@
 import java.util.*;
 public class Tugas{
 
+	public static void main(String [] args){
+		menu();
+	}
 
 	static void menu(){
 		Scanner scan = new Scanner(System.in);
 		int choose = 0;
+		String name="";
 		do {
-			
-			System.out.println("1. Menu 1");
+
+			System.out.println("1. Name");
 			System.out.println("2. Menu 2");
 			System.out.println("3. Menu 3");
 			System.out.println("4. Menu 4");
@@ -17,24 +21,20 @@ public class Tugas{
 
 			choose = scan.nextInt();
 			scan.nextLine();
-			
+
+			switch(choose){
+				case 1:
+					do {
+						System.out.println("Budi");
+					}while(name.equals("Budi"));
+				break;
+			}
+
 		}while(choose != 6);
 	}
 
-
-
-
-
-
-
-
-
-	public static void main(String [] args){
-		menu();
-	}
-	
 	public void clearScreen() {
 		for (int i = 0; i < 50; ++i) System.out.println();
 	}
-	
+
 }
