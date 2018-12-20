@@ -8,7 +8,7 @@ public class Tugas{
 	static Vector<Integer>productPrice = new Vector<>();
 
 	public static void main(String [] args){
-
+		
 		//	Initialize dummy items.
 		initItems();
 
@@ -31,7 +31,7 @@ public class Tugas{
 		productName.add("Basic sweater");
 		productPrice.add(86000);
 
-		productSKU.add("D3"); // alfabet is type of jacket, numeric is type of materials //
+		productSKU.add("D3"); // alphabet is type of jacket, numeric is type of materials //
 		productName.add("Boomber jacket");
 		productPrice.add(75000);
 
@@ -77,9 +77,10 @@ public class Tugas{
 		}while(!address.endsWith("Street"));
 
 		do {
-			System.out.print("Input order [Hoodie jumper | Hoodie Zipper | Basic sweater | Boomber jacket]:");
+			System.out.print("Input item SKU:");
+			listProduct();
 			order = scan.nextLine();
-		}while(!order.equals("Hoodie jumper") && !order.equals("Hoodie zipper") && !order.equals("Basic sweater") && !order.equals("Boomber jacket"));
+		}while( ! isSkuExist(order) );
 
 		do {
 			try{
@@ -112,8 +113,6 @@ public class Tugas{
     static void listProduct(){
 
 		System.out.println();
-
-		System.out.println("List Product");
 
     	for ( int i = 0; i < productName.size(); i++ ){
     		if (i == 0) {
@@ -151,6 +150,7 @@ public class Tugas{
 
 			switch(choose){
 				case 1:
+					System.out.println("List Product");
 					listProduct();
 				break;
 				case 2:
@@ -169,6 +169,12 @@ public class Tugas{
 				clearScreen();
 
 		}while(choose != 6);
+	}
+	
+	static boolean isSkuExist( String SKU ) {
+		
+		return ( productSKU.indexOf(SKU) < 0 ? false : true );
+		
 	}
 
 	//	Jump a few lines to clear the screen.
