@@ -1,8 +1,35 @@
 import java.util.*;
+
 public class Tugas{
+	
+	//	Item details
+	protected static Vector<String>productName = new Vector<>();
+	protected static Vector<Integer>productPrice = new Vector<>();
 
 	public static void main(String [] args){
+		
+		//	Initialize dummy items.
+		initItems();
+
+		//	Show menu.
 		menu();
+		
+	}
+	
+	private static void initItems() {
+
+		productName.add("Hoodie jumper");
+		productPrice.add(92000);
+
+		productName.add("Hoodie Zipper");
+		productPrice.add(100000);
+
+		productName.add("Basic sweater");
+		productPrice.add(86000);
+
+		productName.add("Boomber jacket");
+		productPrice.add(75000);
+
 	}
 
 	static void form(){
@@ -76,39 +103,23 @@ public class Tugas{
 
 	}
 
-
-/*
+	//	List all products
     static void listProduct(){
-		Scanner scan = new Scanner(System.in);
-		//aray//
-		String [] products = new String [5];
-	    products [0] = "Hoodie jumper";
-		products [1] = "Hoodie zipper";
-		products [2] = "Basic sweater";
-		products [3] = "Boomber jacket";
-		 System.out.println(products [0]);
 
-		int [] prices = new int [5];
-		prices [0] = 92000;
-		prices [1] = 100000;
-		prices [2] = 86000;
-		prices [3] = 75000;
-			System.out.println(prices [0]);
-
-		int [] quantity = new int [5];
-		quantity [0] = 92000;
-		quantity [1] = 100000;
-		quantity [2] = 86000;
-		quantity [3] = 75000;
-			System.out.println(quantity [0]);
-
-		for (int i = 0; i<4; i++){
-			System.out.println(products[i]);
-			System.out.println(prices[i]);
-			System.out.println(quantity[i]);
-
-
-	} */
+		System.out.println();
+		
+		System.out.println("List Product");
+		
+    	for ( int i = 0; i < productName.size(); i++ ){
+    		if (i == 0) {
+    			System.out.println("= = = = = = = = = = = = = =");
+    		}
+    		System.out.println("Name : " + productName.get(i));
+    		System.out.println("Price: " + productPrice.get(i));
+    		System.out.println( (i == productName.size() - 1) ? "= = = = = = = = = = = = = =" : "- - - - - - - - - - - - - -" );
+    	}
+    	
+	} 
 
 	static void menu(){
 		Scanner scan = new Scanner(System.in);
@@ -133,7 +144,7 @@ public class Tugas{
 
 			switch(choose){
 				case 1:
-				//listProduct();
+					listProduct();
 				break;
 				case 2:
 					form();
@@ -152,7 +163,8 @@ public class Tugas{
 
 		}while(choose != 6);
 	}
-
+	
+	//	Jump a few lines to clear the screen.
 	static void clearScreen() {
 		System.out.println("Press \"ENTER\" to continue...");
 		Scanner scanner = new Scanner(System.in);
