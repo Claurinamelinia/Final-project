@@ -1,33 +1,33 @@
 import java.util.*;
 
 public class Tugas{
-	
+
 	//	Item details
-	protected static Vector<String>productName = new Vector<>();
-	protected static Vector<Integer>productPrice = new Vector<>();
+	static Vector<String>productName = new Vector<>();
+	static Vector<Integer>productPrice = new Vector<>();
 
 	public static void main(String [] args){
-		
+
 		//	Initialize dummy items.
 		initItems();
 
 		//	Show menu.
 		menu();
-		
-	}
-	
-	private static void initItems() {
 
-		productName.add("Hoodie jumper");
+	}
+
+	static void initItems() {
+
+		productName.add("1. Hoodie jumper");
 		productPrice.add(92000);
 
-		productName.add("Hoodie Zipper");
+		productName.add("2. Hoodie Zipper");
 		productPrice.add(100000);
 
-		productName.add("Basic sweater");
+		productName.add("3. Basic sweater");
 		productPrice.add(86000);
 
-		productName.add("Boomber jacket");
+		productName.add("4. Boomber jacket");
 		productPrice.add(75000);
 
 	}
@@ -107,9 +107,9 @@ public class Tugas{
     static void listProduct(){
 
 		System.out.println();
-		
+
 		System.out.println("List Product");
-		
+
     	for ( int i = 0; i < productName.size(); i++ ){
     		if (i == 0) {
     			System.out.println("= = = = = = = = = = = = = =");
@@ -117,9 +117,10 @@ public class Tugas{
     		System.out.println("Name : " + productName.get(i));
     		System.out.println("Price: " + productPrice.get(i));
     		System.out.println( (i == productName.size() - 1) ? "= = = = = = = = = = = = = =" : "- - - - - - - - - - - - - -" );
+    		// expl ? --> Ternary is subtitute of 'if else' i == etc usually in 'else' you just have to add ? in the end //
     	}
-    	
-	} 
+
+	}
 
 	static void menu(){
 		Scanner scan = new Scanner(System.in);
@@ -163,7 +164,7 @@ public class Tugas{
 
 		}while(choose != 6);
 	}
-	
+
 	//	Jump a few lines to clear the screen.
 	static void clearScreen() {
 		System.out.println("Press \"ENTER\" to continue...");
