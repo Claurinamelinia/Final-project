@@ -19,20 +19,20 @@ public class Tugas{
 
 	static void initItems() {
 
-		productSKU.add("");
+		productSKU.add("A2");
 		productName.add("Hoodie jumper");
 		productPrice.add(92000);
 
-		productSKU.add("");
-		productName.add("Hoodie jumper");
+		productSKU.add("B2");
+		productName.add("Hoodie zipper");
 		productPrice.add(100000);
 
-		productSKU.add("");
-		productName.add("Hoodie jumper");
+		productSKU.add("C2");
+		productName.add("Basic sweater");
 		productPrice.add(86000);
 
-		productSKU.add("");
-		productName.add("Hoodie jumper");
+		productSKU.add("D3"); // alfabet is type of jacket, numeric is type of materials //
+		productName.add("Boomber jacket");
 		productPrice.add(75000);
 
 	}
