@@ -3,6 +3,7 @@ import java.util.*;
 public class Tugas{
 
 	//	Item details
+	static Vector<String>productSKU = new Vector<>();
 	static Vector<String>productName = new Vector<>();
 	static Vector<Integer>productPrice = new Vector<>();
 
@@ -18,16 +19,20 @@ public class Tugas{
 
 	static void initItems() {
 
-		productName.add("1. Hoodie jumper");
+		productSKU.add("");
+		productName.add("Hoodie jumper");
 		productPrice.add(92000);
 
-		productName.add("2. Hoodie Zipper");
+		productSKU.add("");
+		productName.add("Hoodie jumper");
 		productPrice.add(100000);
 
-		productName.add("3. Basic sweater");
+		productSKU.add("");
+		productName.add("Hoodie jumper");
 		productPrice.add(86000);
 
-		productName.add("4. Boomber jacket");
+		productSKU.add("");
+		productName.add("Hoodie jumper");
 		productPrice.add(75000);
 
 	}
@@ -114,6 +119,7 @@ public class Tugas{
     		if (i == 0) {
     			System.out.println("= = = = = = = = = = = = = =");
     		}
+    		System.out.println("SKU  : " + productSKU.get(i));
     		System.out.println("Name : " + productName.get(i));
     		System.out.println("Price: " + productPrice.get(i));
     		System.out.println( (i == productName.size() - 1) ? "= = = = = = = = = = = = = =" : "- - - - - - - - - - - - - -" );
