@@ -80,7 +80,6 @@ public class Tugas{
     static void menu(){
         Scanner scan = new Scanner(System.in);
         int choose = 0;
-        String name="";
         do {
 
             System.out.println("               ========================*========================");
@@ -95,56 +94,69 @@ public class Tugas{
             System.out.println("6. Checkout.");
             System.out.println("7. Exit.");
             System.out.print("Choose menu:");
-
-            choose = scan.nextInt();
             
-            System.out.println();
+            try {
+                choose = scan.nextInt();
+            
+	            System.out.println();
+	
+	            switch(choose){
+	                case 1:
+	                    System.out.println("List Product.");
+	                    listProduct();
+	                break;
+	                case 2:
+	                    System.out.println("Add Order.");
+	                    addOrder();
+	                break;
+	                case 3:
+	                    String sort = "ASC_ID";
+	                    System.out.println("List Order.");
+	                    Scanner scanSubMenu = new Scanner(System.in);
+	                    int chooseSubMenu = 1;
+	                    
+	                    do {
+	                        switch(chooseSubMenu) {
+	                            case 1:
+	                                sort = "ASC_ID";
+	                                break;
+	                            case 2:
+	                                sort = "DESC_ID";
+	                                break;
+	                            case 3:
+	                                sort = "ASC_TOTAL";
+	                                break;
+	                            case 4:
+	                                sort = "DESC_TOTAL";
+	                                break;
+	                            default:
+	                                sort = "ASC_ID";
+	                                break;
+	                        }
+	                        
+	                        listOrders(sort);
+	                        System.out.println("Choose menu:");
+	                        System.out.println("1. Sort ASC by ID.");
+	                        System.out.println("2. Sort DESC by ID.");
+	                        System.out.println("3. Sort ASC by Total.");
+	                        System.out.println("4. Sort DESC by Total.");
+	                        System.out.println("5. Exit.");
+	                        chooseSubMenu = scanSubMenu.nextInt();
+	                    } while ( chooseSubMenu != 5 );
+	                break;
+	                case 4:
+	                break;
+	                case 5:
+	                break;
+	            }
 
-            switch(choose){
-                case 1:
-                    System.out.println("List Product.");
-                    listProduct();
-                break;
-                case 2:
-                    System.out.println("Add Order.");
-                    addOrder();
-                break;
-                case 3:
-                    String sort = "ASC_ID";
-                    System.out.println("List Order.");
-                    do {
-                        Scanner scanSubMenu = new Scanner(System.in);
-                        sort = ( choose == 1 || choose == 2 ? ( choose == 1 ? "ASC_ID" : "DESC_ID" ) : sort );
-                        
-                        /*
-                        if ( choose == 1 || choose == 2 ) {
-                            if ( choose == 1 ) {
-                                sort = "ASC";
-                            } else {
-                                sort = "DESC";
-                            }
-                        }
-                         */
-                        
-                        listOrders(sort);
-                        System.out.println("Choose menu:");
-                        System.out.println("1. Sort ASC by ID.");
-                        System.out.println("2. Sort DESC by ID.");
-                        System.out.println("3. Exit.");
-                        choose = scanSubMenu.nextInt();
-                    } while ( choose != 3 );
-                break;
-                case 4:
-                break;
-                case 5:
-                break;
-            }
-
-            String x = scan.nextLine();
+			} catch ( InputMismatchException e ) {}
             
             clearScreen();
 
         } while( choose != 6 );
+        
+        scan.close();
         
     }
 
@@ -226,7 +238,6 @@ public class Tugas{
         vtotal.add(total);
         
         createOrder(name,phone,address,order,quantity);
-
     }
     
     static void createOrder( String name, String phone, String address, String order, int quantity ) {
@@ -245,38 +256,85 @@ public class Tugas{
 
     //  List all orders
     static void listOrders( String sort ){
-    	
+        
         //  Create order ID clone.
         Vector<Integer>listedOrderId = new Vector<>();
-        listedOrderId = vorderId;
+                       listedOrderId = (Vector)vorderId.clone();
+        Vector<Integer>listedOrderTotal = new Vector<>();
+                       listedOrderTotal = (Vector)vtotal.clone();
         
-    	String sortName = "";
+        String sortName = "";
         
         switch (sort) {
-	        case "ASC_ID":
-	        	Collections.sort(listedOrderId);
-	        	sortName = "ID Ascending.";
-	        	break;
-	
-	        case "DESC_ID":
-	        	Collections.sort(listedOrderId, Collections.reverseOrder());
-	        	sortName = "ID Descending.";
-	        	break;
+            case "ASC_ID":
+                sortName = "ID Ascending.";
+                Collections.sort(listedOrderId);
+                break;
+    
+            case "DESC_ID":
+                sortName = "ID Descending.";
+                Collections.sort(listedOrderId, Collections.reverseOrder());
+                break;
+    
+            case "ASC_TOTAL":
+                sortName = "Total Ascending.";
+                //  Bubble sort ascending total.
+                int n = vtotal.size();  
+                int tempTotal = 0;  
+                int tempID = 0;
+                for(int i=0; i < n; i++){  
+                    for(int j=1; j < (n-i); j++){  
+                        if(listedOrderTotal.get(j-1) > listedOrderTotal.get(j)){  
+                            //swap elements  
+                            tempID = listedOrderId.get(j-1);
+                            tempTotal = listedOrderTotal.get(j-1);
+                            
+                            listedOrderId.set(j-1, listedOrderId.get(j));
+                            listedOrderTotal.set(j-1, listedOrderTotal.get(j));
+                            
+                            listedOrderId.set(j, tempID);
+                            listedOrderTotal.set(j, tempTotal);
+                        }
+                    }  
+                }  
+                break;
+    
+            case "DESC_TOTAL":
+                sortName = "Total Ascending.";
+                //  Bubble sort descending total.
+                int x = vtotal.size();  
+                int tempTotal2 = 0;  
+                int tempID2 = 0;
+                for(int i=0; i < x; i++){  
+                    for(int j=1; j < (x-i); j++){  
+                        if(listedOrderTotal.get(j-1) < listedOrderTotal.get(j)){  
+                            //swap elements  
+                            tempID2 = listedOrderId.get(j-1);
+                            tempTotal2 = listedOrderTotal.get(j-1);
+                            
+                            listedOrderId.set(j-1, listedOrderId.get(j));
+                            listedOrderTotal.set(j-1, listedOrderTotal.get(j));
+                            
+                            listedOrderId.set(j, tempID2);
+                            listedOrderTotal.set(j, tempTotal2);
+                        }
+                    }  
+                }  
+                break;
         }
 
         System.out.println();
         System.out.println("Sort by: " + sortName);
-
+        
         for ( int i = 0; i < listedOrderId.size(); i++ ){
             if (i == 0) {
                 System.out.println("= = = = = = = = = = = = = =");
             }
 
-            int index = vorderId.get(i) - 1;
+            int index = listedOrderId.get(i) - 1;
             System.out.println( "Order #" + listedOrderId.get(i) );
             System.out.println( "- - - - - - - - - - - - - - - -" );
             System.out.println( "Name    :" + vname.get(index) );
-            System.out.println( "Name    :" + vname.get(i) );
             System.out.println( "Phone   :" + vphone.get(index) );
             System.out.println( "Address :" + vaddress.get(index) );
             System.out.println( "Order   :" + vorder.get(index) );
