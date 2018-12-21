@@ -18,7 +18,7 @@ public class Tugas{
     static Vector<Integer>vtotal = new Vector<>();
 
     public static void main(String [] args){
-        
+
         //  Initialize dummy items.
         initItems();
         createDummyOrders( 10 );
@@ -49,21 +49,21 @@ public class Tugas{
     }
 
     static void createDummyOrders( int dummyQuantity ) {
-        
+
         for ( int i = 0; i <= dummyQuantity; i++ ) {
             Random random = new Random();
-            
+
             String name = getSaltString();
             String phone = getSaltString();
             String address = getSaltString();
             String order = productSKU.get(( random.nextInt(3 - 0 + 1) + 0 ));
             int quantity = random.nextInt(10 - 1 + 1) + 1;
-    
+
             createOrder( name, phone, address, order, quantity);
         }
 
     }
-    
+
     // Just random some string.
     static String getSaltString() {
         String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
@@ -94,12 +94,12 @@ public class Tugas{
             System.out.println("6. Checkout.");
             System.out.println("7. Exit.");
             System.out.print("Choose menu:");
-            
+
             try {
                 choose = scan.nextInt();
-            
+
 	            System.out.println();
-	
+
 	            switch(choose){
 	                case 1:
 	                    System.out.println("List Product.");
@@ -114,7 +114,7 @@ public class Tugas{
 	                    System.out.println("List Order.");
 	                    Scanner scanSubMenu = new Scanner(System.in);
 	                    int chooseSubMenu = 1;
-	                    
+
 	                    do {
 	                        switch(chooseSubMenu) {
 	                            case 1:
@@ -133,7 +133,7 @@ public class Tugas{
 	                                sort = "ASC_ID";
 	                                break;
 	                        }
-	                        
+
 	                        listOrders(sort);
 	                        System.out.println("Choose menu:");
 	                        System.out.println("1. Sort ASC by ID.");
@@ -151,13 +151,13 @@ public class Tugas{
 	            }
 
 			} catch ( InputMismatchException e ) {}
-            
+
             clearScreen();
 
         } while( choose != 6 );
-        
+
         scan.close();
-        
+
     }
 
     //  List all products
@@ -179,7 +179,7 @@ public class Tugas{
     }
 
     static void addOrder(){
-        
+
         Scanner scan = new Scanner(System.in);
 
         String name, address, order, phone ="";
@@ -230,18 +230,11 @@ public class Tugas{
 
         System.out.println("Total Price: "+total);
 
-        vname.add(name);
-        vphone.add(phone);
-        vaddress.add(address);
-        vorder.add(order);
-        vquantity.add(quantity);
-        vtotal.add(total);
-        
         createOrder(name,phone,address,order,quantity);
     }
-    
+
     static void createOrder( String name, String phone, String address, String order, int quantity ) {
-        
+
         int total = quantity * productPrice.get( productSKU.indexOf(order) );
 
         vorderId.add((vname.size() + 1));
@@ -251,81 +244,81 @@ public class Tugas{
         vorder.add(order);
         vquantity.add(quantity);
         vtotal.add(total);
-        
+
     }
 
     //  List all orders
     static void listOrders( String sort ){
-        
+
         //  Create order ID clone.
         Vector<Integer>listedOrderId = new Vector<>();
                        listedOrderId = (Vector)vorderId.clone();
         Vector<Integer>listedOrderTotal = new Vector<>();
                        listedOrderTotal = (Vector)vtotal.clone();
-        
+
         String sortName = "";
-        
+
         switch (sort) {
             case "ASC_ID":
                 sortName = "ID Ascending.";
                 Collections.sort(listedOrderId);
                 break;
-    
+
             case "DESC_ID":
                 sortName = "ID Descending.";
                 Collections.sort(listedOrderId, Collections.reverseOrder());
                 break;
-    
+
             case "ASC_TOTAL":
                 sortName = "Total Ascending.";
                 //  Bubble sort ascending total.
-                int n = vtotal.size();  
-                int tempTotal = 0;  
+                int n = vtotal.size();
+                int tempTotal = 0;
                 int tempID = 0;
-                for(int i=0; i < n; i++){  
-                    for(int j=1; j < (n-i); j++){  
-                        if(listedOrderTotal.get(j-1) > listedOrderTotal.get(j)){  
-                            //swap elements  
+                for(int i=0; i < n; i++){
+                    for(int j=1; j < (n-i); j++){
+                        if(listedOrderTotal.get(j-1) > listedOrderTotal.get(j)){
+                            //swap elements
                             tempID = listedOrderId.get(j-1);
                             tempTotal = listedOrderTotal.get(j-1);
-                            
+
                             listedOrderId.set(j-1, listedOrderId.get(j));
                             listedOrderTotal.set(j-1, listedOrderTotal.get(j));
-                            
+
                             listedOrderId.set(j, tempID);
                             listedOrderTotal.set(j, tempTotal);
                         }
-                    }  
-                }  
+                    }
+                }
                 break;
-    
+
             case "DESC_TOTAL":
                 sortName = "Total Ascending.";
                 //  Bubble sort descending total.
-                int x = vtotal.size();  
-                int tempTotal2 = 0;  
+                int x = vtotal.size();
+                int tempTotal2 = 0;
                 int tempID2 = 0;
-                for(int i=0; i < x; i++){  
-                    for(int j=1; j < (x-i); j++){  
-                        if(listedOrderTotal.get(j-1) < listedOrderTotal.get(j)){  
-                            //swap elements  
+                for(int i=0; i < x; i++){
+                    for(int j=1; j < (x-i); j++){
+                        if(listedOrderTotal.get(j-1) < listedOrderTotal.get(j)){
+                            //swap elements
                             tempID2 = listedOrderId.get(j-1);
                             tempTotal2 = listedOrderTotal.get(j-1);
-                            
+
                             listedOrderId.set(j-1, listedOrderId.get(j));
                             listedOrderTotal.set(j-1, listedOrderTotal.get(j));
-                            
+
                             listedOrderId.set(j, tempID2);
                             listedOrderTotal.set(j, tempTotal2);
                         }
-                    }  
-                }  
+                    }
+                }
                 break;
         }
 
         System.out.println();
         System.out.println("Sort by: " + sortName);
-        
+
         for ( int i = 0; i < listedOrderId.size(); i++ ){
             if (i == 0) {
                 System.out.println("= = = = = = = = = = = = = =");
@@ -344,11 +337,11 @@ public class Tugas{
         }
 
     }
-    
+
     static boolean isSkuExist( String SKU ) {
-        
+
         return ( productSKU.indexOf(SKU) < 0 ? false : true );
-        
+
     }
 
     //  Jump a few lines to clear the screen.
