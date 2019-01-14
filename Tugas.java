@@ -90,9 +90,8 @@ public class Tugas{
             System.out.println("2. Add order.");
             System.out.println("3. List order.");
             System.out.println("4. Update order.");
-            System.out.println("5. Delete order.");
-            System.out.println("6. Checkout.");
-            System.out.println("7. Exit.");
+            System.out.println("5. Checkout.");
+            System.out.println("6. Exit.");
             System.out.print("Choose menu:");
 
             try {
@@ -156,8 +155,7 @@ public class Tugas{
 
         } while( choose != 6 );
 
-
-        //scan.close();
+        scan.close();
 
     }
 
