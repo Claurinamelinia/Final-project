@@ -1,24 +1,22 @@
 import java.util.*;
-import java.util.Collections;
+import java.util.Collection;
+// import jdk.nashorn.internal.parser.Scanner;
 
-public class Tugas{
 
-    //  Item details
-    static Vector<String>productSKU = new Vector<>();
-    static Vector<String>productName = new Vector<>();
-    static Vector<Integer>productPrice = new Vector<>();
+public class Tugas {
+    // Item details
+    static Vector<String> productSKU = new Vector<>();
+    static Vector<String> productName = new Vector<>();
+    static Vector<Integer> productPrice = new Vector<>();
 
-    //  Order details
-    static Vector<Integer>vorderId = new Vector<>();
-    static Vector<String>vname = new Vector<>();
-    static Vector<String>vphone = new Vector<>();
-    static Vector<String>vaddress = new Vector<>();
-    static Vector<String>vorder = new Vector<>();
-    static Vector<Integer>vquantity = new Vector<>();
-    static Vector<Integer>vtotal = new Vector<>();
+    // Order details
+    static Vector<Integer> vorderId = new Vector<>();
+    static Vector<String> vname = new Vector<>();
+    static Vector<String> vorder = new Vector<>();
+    static Vector<Integer> vquantity = new Vector<>();
+    static Vector<Integer> vtotal = new Vector<>();
 
     public static void main(String [] args){
-
         //  Initialize dummy items.
         initItems();
         createDummyOrders( 10 );
@@ -54,12 +52,10 @@ public class Tugas{
             Random random = new Random();
 
             String name = getSaltString();
-            String phone = getSaltString();
-            String address = getSaltString();
             String order = productSKU.get(( random.nextInt(3 - 0 + 1) + 0 ));
             int quantity = random.nextInt(10 - 1 + 1) + 1;
 
-            createOrder( name, phone, address, order, quantity);
+            createOrder( name, order, quantity);
         }
 
     }
@@ -134,18 +130,20 @@ public class Tugas{
 	                        }
 
 	                        listOrders(sort);
-	                        System.out.println("Choose menu:");
 	                        System.out.println("1. Sort ASC by ID.");
 	                        System.out.println("2. Sort DESC by ID.");
 	                        System.out.println("3. Sort ASC by Total.");
 	                        System.out.println("4. Sort DESC by Total.");
 	                        System.out.println("5. Exit.");
+	                        System.out.print("Choose Submenu:");
 	                        chooseSubMenu = scanSubMenu.nextInt();
 	                    } while ( chooseSubMenu != 5 );
 	                break;
 	                case 4:
+                    delete();
 	                break;
 	                case 5:
+                    payment();
 	                break;
 	            }
 
@@ -181,37 +179,20 @@ public class Tugas{
 
         Scanner scan = new Scanner(System.in);
 
-        String name, address, order, phone ="";
+        String name, order;
         int quantity = 0;
         int total = 0;
-        boolean phone_state = true;
+
 
         do {
             System.out.print("Input name [3..30 character]:");
             name = scan.nextLine();
         } while( name.length() < 3 || name.length() > 30 );
 
-        do {
-            System.out.print("Input phone [12 digit]:");
-            phone = scan.nextLine();
-            for(int i = 1; i < phone.length(); i++){
-                if(Character.isDigit(phone.charAt(i))){
-                    phone_state = false;
-                }else{
-                    phone_state = true;
-                    break;
-                }
-            }
-        } while( phone.length() != 12 || phone_state );
 
         do {
-            System.out.print("Input Address [must ends with 'Street']:");
-            address = scan.nextLine();
-        } while( ! address.endsWith("Street") );
-
-        do {
+			listProduct();
             System.out.print("Input item SKU:");
-            listProduct();
             order = scan.nextLine();
         } while( ! isSkuExist(order) );
 
@@ -221,7 +202,7 @@ public class Tugas{
                 quantity = scan.nextInt(); scan.nextLine();
             }catch(Exception e){
                 quantity = 0;
-            }
+            } scan.nextLine();
         } while( quantity < 1 || quantity > 25 );
 
         //  Count total
@@ -229,17 +210,15 @@ public class Tugas{
 
         System.out.println("Total Price: "+total);
 
-        createOrder(name,phone,address,order,quantity);
+        createOrder(name,order,quantity);
     }
 
-    static void createOrder( String name, String phone, String address, String order, int quantity ) {
+    static void createOrder( String name, String order, int quantity ) {
 
         int total = quantity * productPrice.get( productSKU.indexOf(order) );
 
         vorderId.add((vname.size() + 1));
         vname.add(name);
-        vphone.add(phone);
-        vaddress.add(address);
         vorder.add(order);
         vquantity.add(quantity);
         vtotal.add(total);
@@ -250,9 +229,9 @@ public class Tugas{
     static void listOrders( String sort ){
 
         //  Create order ID clone.
-        Vector<Integer>listedOrderId = new Vector<Integer>();
-                       listedOrderId = (Vector)vorderId.clone();
-        Vector<Integer>listedOrderTotal = new Vector<Integer>();
+        Vector<Integer>listedOrderId = new Vector<>();
+                       listedOrderId = (Vector) vorderId.clone();
+        Vector<Integer>listedOrderTotal = new Vector<>();
                        listedOrderTotal = (Vector)vtotal.clone();
 
         String sortName = "";
@@ -327,8 +306,6 @@ public class Tugas{
             System.out.println( "Order #" + listedOrderId.get(i) );
             System.out.println( "- - - - - - - - - - - - - - - -" );
             System.out.println( "Name    :" + vname.get(index) );
-            System.out.println( "Phone   :" + vphone.get(index) );
-            System.out.println( "Address :" + vaddress.get(index) );
             System.out.println( "Order   :" + vorder.get(index) );
             System.out.println( "Quantity:" + vquantity.get(index) );
             System.out.println( "Total   :" + vtotal.get(index) );
@@ -346,9 +323,109 @@ public class Tugas{
     //  Jump a few lines to clear the screen.
     static void clearScreen() {
         System.out.println("Press \"ENTER\" to continue...");
-        Scanner scanner = new Scanner(System.in);
-        scanner.nextLine();
+        Scanner scan= new Scanner(System.in);
+        scan.nextLine();
         for (int i = 0; i < 50; ++i) System.out.println();
     }
 
+    static void delete(){
+        Vector<Integer> listedOrderId = new Vector<>();
+                        listedOrderId = (Vector) vorderId.clone();
+        // Vector<Integer> listedOrderTotal = new Vector<>();
+        //                 listedOrderTotal = (Vector) vtotal.clone();
+        Scanner scan = new Scanner(System.in);
+
+        int temp = -1;
+        if(vname.size()==0){
+			System.out.println("No data!");
+		}
+
+		for(int i = 0;i<vname.size();i++){
+        	int index = listedOrderId.get(i) - 1;
+            System.out.println("Order #" + listedOrderId.get(i));
+            System.out.println("- - - - - - - - - - - - - - - -");
+            System.out.println("Name    :" + vname.get(index));
+            System.out.println("Order   :" + vorder.get(index));
+            System.out.println("Quantity:" + vquantity.get(index));
+            System.out.println("Total   :" + vtotal.get(index));
+            System.out.println( (i == vname.size() - 1) ? "= = = = = = = = = = = = = =" : "_ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n" );
+		}
+			System.out.println("Input number to be delete");
+			temp = scan.nextInt();
+            scan.nextLine();
+
+			if (temp == 0){
+
+			}
+
+			else{
+				vorderId.remove(temp-1);
+				vname.remove(temp-1);
+				vorder.remove(temp-1);
+				vquantity.remove(temp-1);
+				vtotal.remove(temp-1);
+				System.out.println("data has been deleted");
+			}
+
+    }
+
+    static void payment(){
+        Scanner scan = new Scanner(System.in);
+        String bank;
+        String phone = "";
+        String address;
+        String kodebca = "0001";
+        String kodemandiri = "00022";
+        String kodebni = "00033";
+        int jumlah = 0;
+        boolean phone_state = true;
+
+        for ( int i = 0; i < vname.size(); i++ ){
+            System.out.println("Order #" + vorderId.get(i));
+            System.out.println("Name    :" + vname.get(i));
+            System.out.println("Order   :" + vorder.get(i));
+            System.out.println("Quantity:" + vquantity.get(i));
+            System.out.println("Total   :" + vtotal.get(i));
+            jumlah += vtotal.get(i);
+        }
+
+        // masukan nomor telepon
+        do {
+            System.out.print("Input phone [12 digit]:");
+            phone = scan.nextLine();
+            for (int i = 1; i < phone.length(); i++) {
+                if (Character.isDigit(phone.charAt(i))) {
+                    phone_state = false;
+                } else {
+                    phone_state = true;
+                    break;
+                }
+            }
+        } while (phone.length() != 12 || phone_state);
+
+        do {
+            System.out.print("Input Address [must ends with 'Street']:");
+            address = scan.nextLine();
+        } while (!address.endsWith("Street"));
+
+        System.out.println("Total Pembayaran ; " + jumlah);
+
+        do{
+            System.out.print("Pilih Bank [BCA | MANDIRI | BNI]");
+            bank = scan.nextLine();
+
+            if(bank.equals("BCA")){
+                System.out.println("Virtual Account ="+ kodebca + phone );
+            }
+            else if(bank.equals("MANDIRI")){
+                System.out.println("Virtual Account ="  + kodemandiri);
+            }
+            else if(bank.equals("BNI")){
+                System.out.println("Virtual Account =" + kodebni);
+            }
+        }while(!bank.equalsIgnoreCase("BCA") && !bank.equalsIgnoreCase("MANDIRI") && !bank.equalsIgnoreCase("BNI"));
+        System.out.println("Due Date = 24 jam x 2");
+
+        clearScreen();
+    }
 }
